@@ -4,7 +4,7 @@ from io import BytesIO
 
 from PIL import Image, ImageTk
 
-from midias5 import *
+from midias import *
 
 RESULTADOS = "Resultados da pesquisa"
 BIBLIOTECA = "Minha biblioteca"
