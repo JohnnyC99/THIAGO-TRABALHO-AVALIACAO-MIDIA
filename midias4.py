@@ -1,3 +1,6 @@
+import sys
+print(sys.executable)
+
 from abc import ABC, abstractmethod
 import requests, tkinter
 
@@ -297,7 +300,7 @@ class Usuario:
 
 
 
-'''
+
 midias = []
 
 usuario = Usuario("Joao")
@@ -402,4 +405,3 @@ while True:
 
     else:
         print("Opcao invalida")
-'''
