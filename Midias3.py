@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import requests
+import requests, tkinter
 
 OMDB_KEY = "c5b6e934"
 RAWG_KEY = "5d4f3c0d35424cab88c3fe8202785c20"
@@ -149,10 +149,12 @@ class Jogo(Midia):
         print(f"Consoles: {', '.join(self.consoles)}")
 
 
+
 class Usuario:
     def __init__(self, nome):
         self.nome = nome
         self.reviews = []
+        self.lista = []
 
     def criar_filme(self, titulo):
         filme = Filme(titulo)
@@ -196,3 +198,193 @@ class Usuario:
 
     def quantidade_reviews(self):
         return len(self.reviews)
+
+    def criar_lista(self):
+        lista_nome = input("Qual o nome da lista: ")
+        lista = []
+
+        while True:
+            titulo = input("Digite a midia que deseja adicionar ou digite 0 pra sair: ")
+
+            if titulo == "0":
+                break
+
+            encontrado = False
+
+            for midia in midias:
+                if midia.titulo == titulo:
+                    lista.append(midia)
+                    encontrado = True
+                    print("Midia adicionada")
+                    break
+        self.listas.append({
+            "nome": lista_nome,
+            "midias": lista
+        })
+
+    
+
+
+
+    def editar_review(self):
+        review_novo = input("Qual review você deseja editar? ")
+
+        for review in self.reviews:
+            if review["midia"] == review_novo:
+                nova_review_nota = float(input("Diga a nota nova que você deseja dar, de 0 a 5: "))
+
+                if 0.5 <= nova_review_nota <= 5 and nova_review_nota * 2 % 1 == 0:
+                    review["nota"] = nova_review_nota
+                    print("Review editada")
+                else:
+                    print("Nota invalida")
+                return
+
+            
+            
+            
+
+    def remover_review(self):
+        review_apagar = input("Qual review voce deseja apagar? ")
+
+        for review in self.reviews:
+            if review["midia"] == review_apagar:
+                self.reviews.remove(review)
+
+                for midia in midias:
+                    if midia.titulo == review_apagar:
+                        midia.reviews.remove(review)
+                        break
+
+                print("Review removida")
+                break
+    
+    def mostrar_lista(self):
+        nome = input("Qual lista voce deseja visualizar? ")
+
+        for lista in self.listas:
+            if lista["nome"] == nome:
+                print(f"Lista: {lista['nome']}")
+
+                for midia in lista["midias"]:
+                    print(midia.titulo)
+
+                return
+
+        print("Lista nao encontrada")
+
+
+
+        
+    
+
+
+
+
+
+'''
+midias = []
+
+usuario = Usuario("Joao")
+
+while True:
+    print("1 : Cadastrar mídia")
+    print("2 : Avaliar mídia")
+    print("3 : Ver mídias cadastradas")
+    print("4 : Ver detalhes de uma mídia")
+    print("5 : Ver reviews")
+    print("6 : Ver quantidade de reviews")
+    print("7 : Criar lista")
+    print("8 : Editar review")
+    print("9 : Remover review")
+    print("10 : Ver Lista")
+    
+    print("0 : Sair")
+
+    opcao = input("Escolha uma opcao: ")
+
+    if opcao == "1":
+        tipo = input("Tipo (1 Filme, 2 Livro, 3 Série, 4 Jogo): ")
+        titulo = input("Título: ")
+
+        if tipo == "1":
+            nova = usuario.criar_filme(titulo)
+        elif tipo == "2":
+            nova = usuario.criar_livro(titulo)
+        elif tipo == "3":
+            nova = usuario.criar_serie(titulo)
+        elif tipo == "4":
+            nova = usuario.criar_jogo(titulo)
+        else:
+            print("Tipo invalido")
+            continue
+
+        if nova.buscar_dados() == False:
+            print("Não encontrado na API, cadastrado só com o título")
+
+        if nova.titulo in [midia.titulo for midia in midias]:
+            print("Essa mídia já está cadastrada!")
+        else:
+            midias.append(nova)
+            print("Mídia cadastrada!")
+
+    elif opcao == "2":
+        titulo = input("Qual mídia você quer avaliar ")
+        encontrado = False
+
+        for midia in midias:
+            if midia.titulo == titulo:
+                encontrado = True
+
+                nota = float(input("Nota (0.5 a 5.0): "))
+                comentario = input("Sua review: ")
+
+                usuario.avaliar_midia(midia, nota, comentario)
+
+        if encontrado == False:
+            print("Mídia não cadastrada!")
+
+    elif opcao == "3":
+        if len(midias) == 0:
+            print("Nenhuma mídia cadastrada")
+
+        for midia in midias:
+            print(midia.titulo)
+
+    elif opcao == "4":
+        titulo = input("Qual mídia você quer ver ")
+        encontrado = False
+
+        for midia in midias:
+            if midia.titulo == titulo:
+                encontrado = True
+                midia.mostrar_detalhes()
+
+        if encontrado == False:
+            print("Mídia não cadastrada!")
+
+    elif opcao == "5":
+        usuario.mostrar_reviews()
+
+    elif opcao == "6":
+        print("Total de reviews: ", usuario.quantidade_reviews())
+
+    elif opcao == "7":
+        usuario.criar_lista()
+
+    elif opcao == "8":
+        usuario.editar_review()
+
+    elif opcao == "9":
+        usuario.remover_review()
+
+    elif opcao == "10":
+        usuario.mostrar_lista()
+
+    elif opcao == "0":
+        print("Sessao finalizada")
+        break
+
+    else:
+        print("Opcao invalida")
+'''
