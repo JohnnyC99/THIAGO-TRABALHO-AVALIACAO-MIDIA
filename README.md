@@ -2,3 +2,4 @@ O projeto foi feito usando conceitos básicos de Programação Orientada a objet
 Para o código funcionar, o usuário deve baixar a pasta completa com os arquivos interface mídia, midiaDudinha e review, a interface vai puxar todas as classes e funções desses arquivos e fazer funcionar
 
 Integrantes: Eduarda Gonçalves, Iarley da Silva, Leonardo Gazolla, João Victor de Souza Carrega
+As bibliotecas instaladas foram: requests, pillow e TKinter
